@@ -3,12 +3,12 @@
 This application a python application that uses rclone to interact with a remote database. Before using this application, please you make sure you do the following:
 1. install rclone https://rclone.org/downloads/
 2. add configuration for cloud_remote e.g https://rclone.org/pcloud/
-   *instead of using 'remote' name as shown in the tutorial, make sure you use e.g 'pcloud' as the name.*
+   *instead of using `remote` name as shown in the tutorial, make sure you use e.g `pcloud` as the name.*
 
 
 rclone_sync will look for directories in your local folder. E.G `/home/david/pcloud`
 
-#####if you run the application without creating this folder, the application will create it for you and then exit. Once you have your local folder created, add directories to it.
+##### if you run the application without creating this folder, the application will create it for you and then exit. Once you have your local folder created, add directories to it.
 
 e.g
 ```
