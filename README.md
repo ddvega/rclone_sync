@@ -17,29 +17,29 @@ e.g
 ```
 *rclone_sync will use these directories to push to or pull from cloud*
 
-#####Important Note
+##### Important Note
 *make sure you only have directories in your main local folder `/home/david/pcloud`*
 *loose files will not sync and will instead create folders in your cloud with those names*
 
-######If no directory exists in local folder
+###### If no directory exists in local folder
 
 >nothing will sync
 
-######If directory exists in your local folder but not in your remote cloud folder
+###### If directory exists in your local folder but not in your remote cloud folder
 
 > directory and it's contents will be added to your remote cloud folder
 
-######If directory exists in both your local folder and in your remote cloud folder
+###### If directory exists in both your local folder and in your remote cloud folder
 
 >contents will be synced either to your remote cloud or from your remote cloud
 
-#####Please be careful when you are pushing to or pulling from your cloud.
+##### Please be careful when you are pushing to or pulling from your cloud.
 
 Certain safety features have been put in place but if you ignore them, you run the risk of losing your data.
 
-#####To push to the cloud run the following:
+##### To push to the cloud run the following:
     python3 rclone.py [name of cloud remote] push
 
 
-#####To pull from the cloud, run the following:
+##### To pull from the cloud, run the following:
     python3 rclone.py [name of cloud remote] pull
