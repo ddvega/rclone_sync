@@ -1,28 +1,3 @@
-"""
-This application uses rclone to interact with a remote database. Before using 
-this application, please you make sure you do the following:
-1. install rclone https://rclone.org/downloads/
-2. add configuration for cloud_remote e.g https://rclone.org/pcloud/
-   *instead of using 'remote' name as shown in the tutorial, make sure you use
-   e.g 'pcloud' as the name.
-
-if you run the program without a directory named [name of cloud remote] in your
-home directory. The program will create it for you and exit.  The exit message
-will instruct you do create folders in your [name of cloud remote] folder.
-
-Let's say you have a folder called "Wallpapers" in your cloud and you want to 
-sync it to your local [name of cloud remote] folder. Create a folder called 
-"Wallpapers" and then pull from your cloud. Or if you want to push something 
-new to the cloud, create the folder and push it.  Make sure there aren't any
-loose files in [name of cloud remote] folder.  Everything needs to be in a 
-directory
-
-To push to the cloud run the following:
-    python3 rclone.py [name of cloud remote] push
-
-To pull from the cloud, run the following:
-    python3 rclone.py [name of cloud remote] pull
-"""
 import os
 import sys
 from typing import List

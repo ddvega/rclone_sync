@@ -18,7 +18,7 @@ e.g
 *rclone_sync will use these directories to push to or pull from cloud*
 
 ##### Important Note
-*make sure you only have directories in your main local folder `/home/david/pcloud`. Loose files will not sync and will instead create folders in your cloud with those names*
+*make sure you only have directories in your main local folder `/home/david/pcloud`. Loose files will not sync and will instead create folders in your cloud with those names.*
 
 ###### If no directory exists in local folder
 
