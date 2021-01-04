@@ -8,7 +8,7 @@ This is a python application that uses rclone to interact with a remote database
 
 rclone_sync will look for directories in your local folder. E.G `/home/david/pcloud`
 
-##### if you run the application without creating this folder, the application will create it for you and then exit. Once you have your local folder created, add directories to it.
+##### if you run the application without creating this folder, the application will create it for you. Once you have your local folder created, add directories to it.
 
 e.g
 ```
@@ -36,9 +36,5 @@ e.g
 
 Certain safety features have been put in place but if you ignore them, you run the risk of losing your data.
 
-##### To push to the cloud run the following:
-    python3 rclone.py [name of cloud remote] push
-
-
-##### To pull from the cloud, run the following:
-    python3 rclone.py [name of cloud remote] pull
+##### To run application enter the following:
+    python3 rclone.py [name of cloud remote]

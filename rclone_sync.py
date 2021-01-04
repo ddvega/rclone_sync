@@ -1,123 +1,39 @@
 import os
 import sys
 from typing import List
+from maintenance_class import CloudManager
+
+cm = CloudManager(sys.argv[1])
+
+menu = "\nPlease Select from the following options:\n" \
+    "[1] List Cloud Directories\n" \
+    "[2] List Local Directories\n" \
+    "[3] Push local to cloud\n" \
+    "[4] Pull cloud to local\n" \
+    "[5] Purge Directory\n" \
+    "[6] Get Cloud info\n" \
+    "[7] Copy cloud dir to local\n" \
+    "[8] Quit"
 
 
-def get_val_from_rclone_str(s: str) -> int:
-    """
-    capture size value(bytes) from string returned from rclone
-    """
-    s = s.split('(')[1].split(')')[0]
-    return int(s.split(' ')[0])
+while True:
+    cm.set_all_cloud_dirs()
+    ans = input(f"{menu}\n-> ")
+    os.system("clear")
+    if ans == '1':
+        cm.print_all_cloud_dir()
+    if ans == '2':
+        cm.print_local_dirs()
+    if ans == '3':
+        cm.push_to_cloud()
+    if ans == '4':
+        cm.pull_from_cloud()
+    if ans == '5':
+        cm.purge_dir_from_cloud()
+    if ans == '7':
+        cm.copy_cloud_dir()
 
+    if ans == '8':
+        break
 
-def cloud_dirs_sizes_obj(dirs: List, cloud_remote) -> object:
-    """
-    create a json object with directory name as key and size of directory as
-    the value. Directory data will come from cloud folder using rclone.
-    """
-    data = {}
-    for i in dirs:
-        os.system(f"rclone mkdir {cloud_remote}:/{i}")
-        a = os.popen(f"rclone size {cloud_remote}:/{i}").readlines()
-
-        data[i] = get_val_from_rclone_str(a[1])
-    return data
-
-
-def get_local_dir_size(path: str) -> int:
-    """
-    return sum of the sizes of every directory and file within a directory
-    https://www.codespeedy.com/get-the-size-of-a-folder-in-python/
-    """
-    # initialize the size
-    total_size = 0
-
-    # use the walk() method to navigate through directory tree
-    for dirpath, dirnames, filenames in os.walk(path):
-        for i in filenames:
-
-            # use join to concatenate all the components of path
-            f = os.path.join(dirpath, i)
-
-            # use getsize to generate size in bytes and add it to the total size
-            total_size += os.path.getsize(f)
-    return total_size
-
-
-def local_dirs_sizes_obj(dirs: List, dname: str) -> object:
-    """
-    create a json object with directory name as key and size of directory as
-    the value. Directory data will come from local directories.
-    """
-    data = {}
-    for i in dirs:
-        data[i] = get_local_dir_size(f'{dname}/{i}')
-    return data
-
-
-def abort_or_continue():
-    """
-    allows the user to close application to avoid loss of data.
-    """
-    a = input("ENTER [c] to Continue or [any key] to Abort: ").lower()
-    if a != 'c':
-        sys.exit()
-        
-
-# name of the cloud remote service to use e.g pcloud or dropbox
-cloud_remote = sys.argv[1]
-
-# push to or pull from cloud are the options
-# push or pull
-action = sys.argv[2]
-
-# get users home directory
-home = os.path.expanduser("~")
-
-# local cloud_remote directory
-dname = f'{home}/{cloud_remote}'
-
-if not os.path.exists(dname):
-    print(
-        "Looks like this is your first time using this application.\n" +
-        f"A folder called {cloud_remote} has been added to your home\n" +
-        "directory.\nAny directory in this folder, will get synced with " +
-        f"your cloud service. \nPlease add directories to {cloud_remote} " +
-        "and re-run application."
-    )
-    os.mkdir(dname)
-    sys.exit()
-
-# get names of all of the directories in local cloud_remote directory
-local_dirs = os.listdir(dname)
-
-# create object with sizes of directories in cloud
-cloud_data_sizes = cloud_dirs_sizes_obj(local_dirs, cloud_remote)
-
-# create object with sizes of directories on local machine
-local_data_sizes = local_dirs_sizes_obj(local_dirs, dname)
-
-# safety against overwriting data
-for k, v in local_data_sizes.items():
-    # cloud has more data, a push from local will delete it
-    if cloud_data_sizes[k] > v and action == "push":
-        diff = cloud_data_sizes[k]-v
-        print(f'{diff} bytes will be DELETED from {k} in cloud.')
-        abort_or_continue()
-
-    # local has more data, a pull from cloud will delete it
-    if v > cloud_data_sizes[k] and action == "pull":
-        diff = v-cloud_data_sizes[k]
-        print(f'{diff} bytes will be DELETED from {k} on local machine.')
-        abort_or_continue()
-
-# sync local machine with plcoud
-for i in local_dirs:
-    if action == "push":
-        os.system(f"rclone sync {dname}/{i} {cloud_remote}:/{i} -P")
-    elif action == "pull":
-        os.system(f"rclone sync {cloud_remote}:/{i} {dname}/{i} -P")
-
-
-sys.exit(0)
+sys.exit()
