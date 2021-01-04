@@ -1,4 +1,5 @@
 # rclone_sync
+##### *created to run in a Linux environment. Haven't tested in macOS or Windows*
 
 This is a python application that uses rclone to interact with a remote database. Before using this application, please you make sure you do the following:
 1. install rclone https://rclone.org/downloads/
@@ -36,5 +37,11 @@ e.g
 
 Certain safety features have been put in place but if you ignore them, you run the risk of losing your data.
 
-##### To run application enter the following:
-    python3 rclone.py [name of cloud remote]
+##### To run application with main menu, run the following:
+`python3 rclone.py [name of cloud remote]`
+
+##### To automatically PUSH your local folders to cloud, run the following:
+`python3 rclone.py [name of cloud remote] push`
+
+##### To automatically PULL from your cloud to local folders, run the following:
+`python3 rclone.py [name of cloud remote] pull`

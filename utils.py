@@ -1,6 +1,7 @@
 import os
 import sys
 
+
 def get_local_dir_size(path: str) -> int:
     """
     return sum of the sizes of every directory and file within a directory
@@ -25,14 +26,35 @@ def get_val_from_rclone_str(s: str) -> int:
     """
     capture size value(bytes) from string returned from rclone
     """
+
     s = s.split('(')[1].split(')')[0]
     return int(s.split(' ')[0])
 
 
-def abort_or_continue():
+def kill_switch(msg):
     """
     allows the user to close application to avoid loss of data.
     """
+    print(msg)
     a = input("ENTER [c] to Continue or [any key] to Abort: ").lower()
     if a != 'c':
         sys.exit()
+
+
+def valid_input(msg, limit):
+
+    while True:
+        print(f'\n{msg}')
+        print("[e] - EXIT")
+        a = input("-> ")
+
+        if a.lower() == 'e':
+            return -1
+
+        if not a.isdigit():
+            print("Please enter an integer.")
+
+        elif 0 <= int(a) < limit:
+            return int(a)
+        else:
+            print("Please enter a valid integer.")
