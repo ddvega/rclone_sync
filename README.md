@@ -1,6 +1,6 @@
 # rclone_sync
 
-This application a python application that uses rclone to interact with a remote database. Before using this application, please you make sure you do the following:
+This is a python application that uses rclone to interact with a remote database. Before using this application, please you make sure you do the following:
 1. install rclone https://rclone.org/downloads/
 2. add configuration for cloud_remote e.g https://rclone.org/pcloud/
    *instead of using `remote` name as shown in the tutorial, make sure you use e.g `pcloud` as the name.*
@@ -15,7 +15,7 @@ e.g
 /home/david/pcloud/Wallpapers
 /home/david/pcloud/Pictures
 ```
-*rclone_sync will use these directories to push to or pull from cloud*
+*rclone_sync will use these directories to push to or pull from cloud. Directory names in local folder need to match names of directories in cloud*
 
 ##### Important Note
 *make sure you only have directories in your main local folder `/home/david/pcloud`. Loose files will not sync and will instead create folders in your cloud with those names.*
@@ -30,7 +30,7 @@ e.g
 
 ###### If directory exists in both your local folder and in your remote cloud folder
 
->contents will be synced either to your remote cloud or from your remote cloud
+>contents will be synced either to your remote cloud or from your remote cloud as long as directory names match
 
 ##### Please be careful when you are pushing to or pulling from your cloud.
 
