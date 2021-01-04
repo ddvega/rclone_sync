@@ -45,3 +45,5 @@ Certain safety features have been put in place but if you ignore them, you run t
 
 ##### To automatically PULL from your cloud to local folders, run the following:
 `python3 rclone.py [name of cloud remote] pull`
+
+##### .env file contains a list called `OFF_LIMITS` that contains all of the folders in my cloud that I don't want modified. Please update this with your list.
