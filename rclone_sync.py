@@ -56,18 +56,16 @@ def local_dirs_sizes_obj(dirs: List, dname: str) -> object:
     return data
 
 
-def get_local_dirs(dirname) -> List:
+def abort_or_continue():
     """
-    return all of the directorys in local cloud_remote folder. These will be 
-    the directories that get synced with cloud
+    allows the user to close application to avoid loss of data.
     """
-    return os.listdir(dirname)
+    a = input("ENTER [c] to Continue or [any key] to Abort: ").lower()
+    if a != 'c':
+        sys.exit()
+        
 
-
-###############################################################################
-# main
-###############################################################################
-# name of the cloud remote service to use
+# name of the cloud remote service to use e.g pcloud or dropbox
 cloud_remote = sys.argv[1]
 
 # push to or pull from cloud are the options
@@ -83,15 +81,16 @@ dname = f'{home}/{cloud_remote}'
 if not os.path.exists(dname):
     print(
         "Looks like this is your first time using this application.\n" +
-        "A folder called cloud_remote has been added to your home directory.\n" +
-        "Any directory in this folder, will get synced with your cloud_remote.\n" +
-        "Please add directories to cloud_remote folder and re-run application."
+        f"A folder called {cloud_remote} has been added to your home\n" +
+        "directory.\nAny directory in this folder, will get synced with " +
+        f"your cloud service. \nPlease add directories to {cloud_remote} " +
+        "and re-run application."
     )
     os.mkdir(dname)
     sys.exit()
 
 # get names of all of the directories in local cloud_remote directory
-local_dirs = get_local_dirs(dname)
+local_dirs = os.listdir(dname)
 
 # create object with sizes of directories in cloud
 cloud_data_sizes = cloud_dirs_sizes_obj(local_dirs, cloud_remote)
@@ -105,16 +104,13 @@ for k, v in local_data_sizes.items():
     if cloud_data_sizes[k] > v and action == "push":
         diff = cloud_data_sizes[k]-v
         print(f'{diff} bytes will be DELETED from {k} in cloud.')
-        a = input("ENTER [c] to Continue or [any key] to Abort: ").lower()
-        if a != 'c':
-            sys.exit()
+        abort_or_continue()
+
     # local has more data, a pull from cloud will delete it
     if v > cloud_data_sizes[k] and action == "pull":
         diff = v-cloud_data_sizes[k]
         print(f'{diff} bytes will be DELETED from {k} on local machine.')
-        a = input("ENTER [c] to Continue or [any key]to Abort: ").lower()
-        if a != 'c':
-            sys.exit()
+        abort_or_continue()
 
 # sync local machine with plcoud
 for i in local_dirs:
